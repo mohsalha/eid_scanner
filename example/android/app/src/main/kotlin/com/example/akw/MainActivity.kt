@@ -1,4 +1,4 @@
-package com.example.akw
+package com.example.eid
 
 import io.flutter.embedding.android.FlutterActivity
 

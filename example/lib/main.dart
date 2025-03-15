@@ -97,14 +97,20 @@ class _EmiratesIdScannerExampleState extends State<EmiratesIdScannerExample> {
     })));
   }
 
+  Future<void> _detectEIDCard() async {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => EIDDetectCard(onScanned: (data) {
+      scannedData = data;
+    })));
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Emirates ID Scanner Example')),
+      appBar: AppBar(title: const Text('Emirates ID Scanner Example')),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,31 +121,36 @@ class _EmiratesIdScannerExampleState extends State<EmiratesIdScannerExample> {
               },
               child: Text(isScanning ? 'Scanning...' : 'Gallery'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20,),
             ElevatedButton(
               onPressed: isScanning ? null : (){
                 _selectImage(ImageSource.camera);
               },
               child: Text(isScanning ? 'Scanning...' : 'Camera'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: isScanning ? null : _scanEIDCard,
               child: Text(isScanning ? 'Scanning...' : 'Scan Emirates ID'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: isScanning ? null : _detectEIDCard,
+              child: Text(isScanning ? 'Scanning...' : 'Detect Emirates ID Card'),
+            ),
+            const SizedBox(height: 20),
             scannedData != null
                 ? Card(
-              elevation: 4,
+                elevation: 4,
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Text(
                   scannedData.toString(),
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             )
-                : Text('No data scanned yet.'),
+                : const Text('No data scanned yet.'),
           ],
         ),
       ),

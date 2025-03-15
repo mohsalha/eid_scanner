@@ -1,8 +1,8 @@
-name: eid_scanner
-description: A Flutter package to scan and parse Emirates ID cards.
 
-version: 0.0.2
-# publish_to: https://pub.dev
+name: eid_scanner
+description: A Flutter package for scanning Emirates IDs, using object detection and text extraction to capture data from the ID.
+
+version: 0.0.4
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -13,10 +13,25 @@ dependencies:
   google_ml_kit: ^0.19.0
   intl: ^0.20.2
   camera: 0.10.4
-  path_provider:
-  image: ^3.2.0
-
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+# Metadata for pub.dev
+repository: https://github.com/amjadHamdoun/eid_scanner
+homepage: https://amjadhamdoun.com
+
+# Add author information
+authors:
+  - Amjad Hamdoun <amjadhamdoun0@gmail.com>
+
+# Optionally add a changelog file if needed
+changelog: CHANGELOG.md
+
+# Optionally add a contributing file
+contributing: CONTRIBUTING.md
+
+# License Information
+license: MIT

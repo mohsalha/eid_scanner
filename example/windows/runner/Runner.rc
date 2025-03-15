@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "akw" "\0"
+            VALUE "FileDescription", "eid" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "akw" "\0"
+            VALUE "InternalName", "eid" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "akw.exe" "\0"
-            VALUE "ProductName", "akw" "\0"
+            VALUE "OriginalFilename", "eid.exe" "\0"
+            VALUE "ProductName", "eid" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

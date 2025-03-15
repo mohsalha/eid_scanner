@@ -1,37 +1,42 @@
 part of eid_scanner;
 
 /// A widget that allows users to scan an Emirates ID using the device's camera.
-class EIDScannerCamera extends StatefulWidget {
+class EIDDetectCard extends StatefulWidget {
   /// Callback function that is triggered when the Emirates ID is successfully scanned.
   /// The scanned data is passed as an `EmirateIdModel` object.
   final Function(EmirateIdModel?) onScanned;
 
-  /// Creates an [EIDScannerCamera] widget.
-  const EIDScannerCamera({Key? key, required this.onScanned}) : super(key: key);
+  /// Creates an [EIDDetectCard] widget.
+  const EIDDetectCard({Key? key, required this.onScanned}) : super(key: key);
 
   @override
-  _EIDScannerCameraState createState() => _EIDScannerCameraState();
+  _EIDDetectCardState createState() => _EIDDetectCardState();
 }
 
-class _EIDScannerCameraState extends State<EIDScannerCamera> {
+class _EIDDetectCardState extends State<EIDDetectCard> {
   CameraController? _cameraController;
   bool _isProcessing = false;
-  late TextRecognizer _textRecognizer;
   bool _isScanning = false;
   String _message = "Position the ID inside the box";
   int _scanCount = 0;
 
   Rect? _scanBox;
+  late ObjectDetector _objectDetector;
 
   @override
   void initState() {
     super.initState();
     _initializeCamera();
-    _textRecognizer = GoogleMlKit.vision.textRecognizer();
+    _objectDetector = GoogleMlKit.vision.objectDetector(
+      options: ObjectDetectorOptions(
+        classifyObjects: false,
+        multipleObjects: false,
+        mode: DetectionMode.stream,
+      ),
+    );
   }
 
-  /// Initializes the camera and sets up the camera controller to start image stream.
-  /// This function also sets the initial scan box position and size.
+  /// Initializes the camera and sets up the camera controller to start the image stream.
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
     _cameraController = CameraController(
@@ -50,7 +55,6 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
   }
 
   /// Calculates the scan box area where the Emirates ID should be placed for scanning.
-  /// This ensures the scan box is centered and scaled according to the device's screen size.
   void _calculateScanBox() {
     final size = MediaQuery.of(context).size;
     double boxWidth = size.width * 0.8;
@@ -60,8 +64,7 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     _scanBox = Rect.fromLTWH(left, top, boxWidth, boxHeight);
   }
 
-  /// Starts the image stream from the camera, processes each frame, and looks for Emirates ID.
-  /// This function is responsible for handling the scanning state and calling the image processing method.
+  /// Starts the image stream from the camera, processes each frame, and looks for the Emirates ID.
   void _startImageStream() {
     _cameraController?.startImageStream((CameraImage image) async {
       if (!_isProcessing) {
@@ -72,19 +75,61 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     });
   }
 
-  /// Processes the captured image to detect Emirates ID text and determine if it matches the required criteria.
-  /// The scanning state is updated based on whether the ID is detected or not.
+  /// Processes the captured image to detect an ID card and determines if it matches the required criteria.
   Future<void> _processImage(CameraImage image) async {
     if (_isScanning || _scanBox == null) return;
     _isScanning = true;
 
+    final InputImage inputImage = _convertCameraImageToInputImage(image);
+
+    // 🔥 Detect objects (ID card)
+    final List<DetectedObject> detectedObjects = await _objectDetector.processImage(inputImage);
+
+    bool idDetected = false;
+    Rect? idBoundingBox;
+
+    for (DetectedObject obj in detectedObjects) {
+      if (obj.boundingBox.width > 100 && obj.boundingBox.height > 50) {
+        // Ensure the bounding box dimensions are appropriate for an ID card
+        idDetected = true;
+        idBoundingBox = obj.boundingBox;
+        break;
+      }
+    }
+
+    if (idDetected && idBoundingBox != null && _scanBox!.contains(idBoundingBox.center)) {
+      _scanCount++;
+      setState(() {
+        _message = "ID detected, hold steady...";
+      });
+
+      if (_scanCount >= 3) {
+        _cameraController?.stopImageStream();
+        final String imagePath = await _captureImage();
+        final File imageFile = File(imagePath);
+        final scannedData = await EIDScanner.scanEmirateId(image: imageFile);
+        widget.onScanned(scannedData);
+        Navigator.pop(context);
+      }
+    } else {
+      _scanCount = 0;
+      setState(() {
+        _message = "Position the ID properly inside the box";
+      });
+    }
+
+    _isScanning = false;
+  }
+
+  /// Converts CameraImage to InputImage format for processing with the Object Detector.
+  InputImage _convertCameraImageToInputImage(CameraImage image) {
     final WriteBuffer buffer = WriteBuffer();
     for (var plane in image.planes) {
       buffer.putUint8List(plane.bytes);
     }
     final bytes = buffer.done().buffer.asUint8List();
 
-    final InputImage inputImage = InputImage.fromBytes(
+    return InputImage.fromBytes(
       bytes: bytes,
       metadata: InputImageMetadata(
         size: Size(image.width.toDouble(), image.height.toDouble()),
@@ -93,68 +138,9 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
         bytesPerRow: image.planes[0].bytesPerRow,
       ),
     );
-
-    final RecognizedText recognizedText = await _textRecognizer.processImage(inputImage);
-
-    bool idDetected = false;
-    String feedbackMessage = "Align the ID properly inside the box";
-
-    for (TextBlock block in recognizedText.blocks) {
-      final Rect boundingBox = block.boundingBox;
-
-      // ✅ Check if the text block is INSIDE the scan box
-      if (_scanBox!.contains(boundingBox.center)) {
-        print("Text inside box: ${block.text}");
-
-        if (block.text.toLowerCase().contains("resident identity card") ||
-            block.text.toLowerCase().contains("united arab emirates") ||
-            block.text.length > 10) {
-          idDetected = true;
-          break;
-        }
-      }
-    }
-
-    // 🔥 Enhanced User Messages Based on ID Detection
-    if (idDetected) {
-      _scanCount++;
-      if (_scanCount >= 3) {
-        feedbackMessage = "ID detected! Capturing...";
-        _cameraController?.stopImageStream();
-        final String imagePath = await _captureImage();
-        final File imageFile = File(imagePath);
-        final scannedData = await EIDScanner.scanEmirateId(image: imageFile);
-        widget.onScanned(scannedData);
-        Navigator.pop(context);
-      } else {
-        feedbackMessage = "ID detected, hold steady...";
-      }
-    } else {
-      _scanCount = 0;
-
-      // 🔹 Improve error messages based on positioning issues
-      if (recognizedText.blocks.isEmpty) {
-        feedbackMessage = "No text detected. Ensure the ID is clearly visible.";
-      } else {
-        // 🔹 Check if ID is outside the scan box
-        bool isOutsideBox = recognizedText.blocks.any((block) =>
-        !_scanBox!.contains(block.boundingBox.center));
-        if (isOutsideBox) {
-          feedbackMessage = "Move the ID inside the box.";
-        }
-      }
-    }
-
-    setState(() {
-      _message = feedbackMessage;
-    });
-
-    _isScanning = false;
   }
 
-
   /// Captures an image from the camera and returns its file path.
-  /// This function saves the captured image temporarily and returns the path to the file.
   Future<String> _captureImage() async {
     final Directory tempDir = await getTemporaryDirectory();
     final String imagePath = '${tempDir.path}/eid_scan.jpg';
@@ -162,11 +148,10 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     return imagePath;
   }
 
-
   @override
   void dispose() {
     _cameraController?.dispose();
-    _textRecognizer.close();
+    _objectDetector.close();
     super.dispose();
   }
 
@@ -207,3 +192,5 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     );
   }
 }
+
+
