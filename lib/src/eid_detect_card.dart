@@ -43,7 +43,8 @@ class _EIDDetectCardState extends State<EIDDetectCard> {
       cameras.first,
       ResolutionPreset.max,
       enableAudio: false,
-      imageFormatGroup: Platform.isIOS ? ImageFormatGroup.bgra8888 : ImageFormatGroup.yuv420,
+      imageFormatGroup:
+          Platform.isIOS ? ImageFormatGroup.bgra8888 : ImageFormatGroup.yuv420,
     );
     await _cameraController?.initialize();
     if (mounted) {
@@ -83,7 +84,8 @@ class _EIDDetectCardState extends State<EIDDetectCard> {
     final InputImage inputImage = _convertCameraImageToInputImage(image);
 
     // 🔥 Detect objects (ID card)
-    final List<DetectedObject> detectedObjects = await _objectDetector.processImage(inputImage);
+    final List<DetectedObject> detectedObjects =
+        await _objectDetector.processImage(inputImage);
 
     bool idDetected = false;
     Rect? idBoundingBox;
@@ -97,7 +99,9 @@ class _EIDDetectCardState extends State<EIDDetectCard> {
       }
     }
 
-    if (idDetected && idBoundingBox != null && _scanBox!.contains(idBoundingBox.center)) {
+    if (idDetected &&
+        idBoundingBox != null &&
+        _scanBox!.contains(idBoundingBox.center)) {
       _scanCount++;
       setState(() {
         _message = "ID detected, hold steady...";
@@ -107,7 +111,8 @@ class _EIDDetectCardState extends State<EIDDetectCard> {
         _cameraController?.stopImageStream();
         final String imagePath = await _captureImage();
         final File imageFile = File(imagePath);
-        final scannedData = await EIDScanner.scanEmirateId(image: imageFile);
+        final scannedData = await EIDScanner.scanEmirateId(
+            sourceType: ImageSourceType.file, file: imageFile);
         widget.onScanned(scannedData);
         Navigator.pop(context);
       }
@@ -192,5 +197,3 @@ class _EIDDetectCardState extends State<EIDDetectCard> {
     );
   }
 }
-
-

@@ -38,7 +38,8 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
       cameras.first,
       ResolutionPreset.max,
       enableAudio: false,
-      imageFormatGroup: Platform.isIOS ? ImageFormatGroup.bgra8888 : ImageFormatGroup.yuv420,
+      imageFormatGroup:
+          Platform.isIOS ? ImageFormatGroup.bgra8888 : ImageFormatGroup.yuv420,
     );
     await _cameraController?.initialize();
     if (mounted) {
@@ -94,7 +95,8 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
       ),
     );
 
-    final RecognizedText recognizedText = await _textRecognizer.processImage(inputImage);
+    final RecognizedText recognizedText =
+        await _textRecognizer.processImage(inputImage);
 
     bool idDetected = false;
     String feedbackMessage = "Align the ID properly inside the box";
@@ -123,7 +125,8 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
         _cameraController?.stopImageStream();
         final String imagePath = await _captureImage();
         final File imageFile = File(imagePath);
-        final scannedData = await EIDScanner.scanEmirateId(image: imageFile);
+        final scannedData = await EIDScanner.scanEmirateId(
+            sourceType: ImageSourceType.file, file: imageFile);
         widget.onScanned(scannedData);
         Navigator.pop(context);
       } else {
@@ -137,8 +140,8 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
         feedbackMessage = "No text detected. Ensure the ID is clearly visible.";
       } else {
         // 🔹 Check if ID is outside the scan box
-        bool isOutsideBox = recognizedText.blocks.any((block) =>
-        !_scanBox!.contains(block.boundingBox.center));
+        bool isOutsideBox = recognizedText.blocks
+            .any((block) => !_scanBox!.contains(block.boundingBox.center));
         if (isOutsideBox) {
           feedbackMessage = "Move the ID inside the box.";
         }
@@ -152,7 +155,6 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     _isScanning = false;
   }
 
-
   /// Captures an image from the camera and returns its file path.
   /// This function saves the captured image temporarily and returns the path to the file.
   Future<String> _captureImage() async {
@@ -161,7 +163,6 @@ class _EIDScannerCameraState extends State<EIDScannerCamera> {
     await _cameraController?.takePicture();
     return imagePath;
   }
-
 
   @override
   void dispose() {

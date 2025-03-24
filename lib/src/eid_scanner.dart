@@ -5,6 +5,9 @@ part of eid_scanner;
 /// This class uses Google ML Kit's text recognition capabilities to process
 /// the image of an Emirates ID, and it extracts relevant details such as the
 /// name, nationality, sex, ID number, and important dates (birth, issue, expiry).
+///
+enum ImageSourceType { file, network, asset }
+
 class EIDScanner {
   /// Scans an Emirates ID card and extracts information.
   ///
@@ -18,41 +21,80 @@ class EIDScanner {
   /// - An instance of [EmirateIdModel] containing the extracted data, or
   ///   `null` if the ID could not be scanned or if it does not match the expected
   ///   Emirates ID format.
-  static Future<EmirateIdModel?> scanEmirateId({required File image}) async {
+  static Future<EmirateIdModel?> scanEmirateId({
+    required ImageSourceType sourceType,
+    File? file,
+    String? imagePath, // For assets or network images
+  }) async {
     try {
+      if (sourceType == ImageSourceType.file && file == null) {
+        throw Exception("File source selected but no file provided.");
+      }
+      if ((sourceType == ImageSourceType.asset ||
+              sourceType == ImageSourceType.network) &&
+          (imagePath == null || imagePath.isEmpty)) {
+        throw Exception("Asset/Network source selected but no path provided.");
+      }
+
       List<String> eIdDates = [];
       TextRecognizer textDetector = GoogleMlKit.vision.textRecognizer();
-      final RecognizedText recognizedText = await textDetector.processImage(
-        InputImage.fromFilePath(image.path),
-      );
 
-      // Normalize text for better recognition and remove non-English characters
+      // Get InputImage based on sourceType
+      InputImage inputImage;
+      switch (sourceType) {
+        case ImageSourceType.file:
+          inputImage = InputImage.fromFilePath(file!.path);
+          break;
+        case ImageSourceType.asset:
+          final ByteData data = await rootBundle.load(imagePath!);
+          final Uint8List bytes = data.buffer.asUint8List();
+          inputImage = InputImage.fromBytes(
+            bytes: bytes,
+            metadata: InputImageMetadata(
+              size: Size(1080, 1920), // Adjust based on your use case
+              rotation: InputImageRotation.rotation0deg,
+              format: InputImageFormat.nv21,
+              bytesPerRow: 1080,
+            ),
+          );
+          break;
+        case ImageSourceType.network:
+          // Download image and convert it into a file first
+          File networkFile = await _downloadImage(imagePath!);
+          inputImage = InputImage.fromFile(networkFile);
+          break;
+      }
+
+      final RecognizedText recognizedText =
+          await textDetector.processImage(inputImage);
+
+      // Normalize text for better recognition
       String normalizedText = recognizedText.text
-          .replaceAll(RegExp(r'\s+'), ' ') // Replace multiple spaces with a single space
-          .replaceAll(RegExp(r'[^a-zA-Z0-9:/\- ]'), '') // Remove non-English characters
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll(RegExp(r'[^a-zA-Z0-9:/\- ]'), '')
           .toLowerCase();
 
       print('Normalized Text: $normalizedText');
 
-      // Validate if the card is an Emirates ID
+      // Validate Emirates ID
       if (!normalizedText.contains("resident") ||
           !normalizedText.contains("united arab emirates") ||
           !normalizedText.contains("id number")) {
         return null;
       }
 
-      // Attributes
+      // Extract attributes
       String? name, number, nationality, sex;
 
       for (var element in recognizedText.blocks) {
         String cleanedElement = element.text
             .replaceAll(RegExp(r'\s+'), ' ')
-            .replaceAll(RegExp(r'[^a-zA-Z0-9:/\- ]'), '') // Remove non-English characters
+            .replaceAll(RegExp(r'[^a-zA-Z0-9:/\- ]'), '')
             .toLowerCase();
 
         print(cleanedElement);
 
-        if (extractDate(cleanedElement)!=null) {
+        if (extractDate(cleanedElement) != null) {
           eIdDates.add(extractDate(cleanedElement)!);
         } else if (_isName(text: cleanedElement) != null) {
           name = _isName(text: cleanedElement);
@@ -81,6 +123,15 @@ class EIDScanner {
       print("Error scanning Emirates ID: $e");
       return null;
     }
+  }
+
+  /// Helper function to download network image and save it as a file
+  static Future<File> _downloadImage(String url) async {
+    final http.Response response = await http.get(Uri.parse(url));
+    final Directory tempDir = await getTemporaryDirectory();
+    final File file = File('${tempDir.path}/temp_image.jpg');
+    await file.writeAsBytes(response.bodyBytes);
+    return file;
   }
 
   /// Sorts dates in ascending order.
@@ -120,7 +171,6 @@ class EIDScanner {
     Match? match = pattern.firstMatch(text);
     return match?.group(0); // Returns the extracted date or null if no match
   }
-
 
   /// Extracts gender if present.
   ///
