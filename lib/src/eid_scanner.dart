@@ -75,20 +75,7 @@ class EIDScanner {
           .toLowerCase();
 
       print('Normalized Text: $normalizedText');
-/*
-united arab emirates federalauthority for identity  citizenship customs  port security resident 
-ldentity card 1o number/4 784-1999-4790731-9 
-name: abdul rasheed pothakkaran kabeer kabeer pothakkaran 
-date of birth: 01/06/1999 
-nationality india 
-issuing date /y 
-27/06/2022 
-expiry date 
-/elgy 23/06/2024 
-signature/ 01/06 
-sex: m
 
-*/
       // Validate Emirates ID
       if (!normalizedText.contains("resident") ||
           !normalizedText.contains("united arab emirates")) {
