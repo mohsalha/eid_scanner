@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: async
-      sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
+      sha256: "758e6d74e971c3e5aceb4110bfd6698efc7f501675bcfe0c775459a8140750eb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.0"
+    version: "2.13.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -29,18 +29,18 @@ packages:
     dependency: transitive
     description:
       name: camera_android
-      sha256: "007c57cdcace4751014071e3d42f2eb8a64a519254abed35b714223d81d66234"
+      sha256: "997f19dbdb1bb0e40bdb87265c7e550abea657fe3c4ba3720f81e97b6d4b64dd"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.10"
+    version: "0.10.10+1"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: "3f81ee3e88a79b0b010f0233d42625926299551b05d5dc995267a0b35bc33247"
+      sha256: ba48b65a3a97004276ede882e6b838d9667642ff462c95a8bb57ca8a82b6bd25
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.18"
+    version: "0.9.18+11"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -69,10 +69,10 @@ packages:
     dependency: transitive
     description:
       name: clock
-      sha256: cb6d7f03e1de671e34607e909a7213e31d7752be4fb66a86d29fe1eb14bfb5cf
+      sha256: fddb70d9b5277016c77a80201021d40a2247104d9f4aa7bab7157b7e3f05b84b
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   collection:
     dependency: transitive
     description:
@@ -153,10 +153,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "615a505aef59b151b46bbeef55b36ce2b6ed299d160c51d84281946f0aa0ce0e"
+      sha256: "5a1e6fb2c0561958d7e4c33574674bda7b77caaca7a33b758876956f2902eea3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.24"
+    version: "2.0.27"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -166,138 +166,138 @@ packages:
     dependency: transitive
     description:
       name: google_ml_kit
-      sha256: "52a89712eeccb80a42a7de78d813ca7cc1988fb21d6e7011403ac627ce104eab"
+      sha256: "71e325a4d7837734844adb3ffdf29f8cc0a71a7013168c080768f2f853814bf6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.18.1"
   google_mlkit_barcode_scanning:
     dependency: transitive
     description:
       name: google_mlkit_barcode_scanning
-      sha256: "5852d1daa007a05b33f99e3e3fa34227c49d9c41bc92a85d820666a57fd5c35f"
+      sha256: "1df232be24ae9cb93443d2786681efab71b5964c8c476f6072d8b4d61aa03ecc"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.12.1"
   google_mlkit_commons:
     dependency: transitive
     description:
       name: google_mlkit_commons
-      sha256: "7e9a6d6e66b44aa8cfe944bda9bc3346c52486dd890ca49e5bc98845cda40d7f"
+      sha256: "9990a65f407a3ef6bae646bf10143faa93fec126683771465bc6c0b43fb0e6e9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.0"
+    version: "0.8.1"
   google_mlkit_digital_ink_recognition:
     dependency: transitive
     description:
       name: google_mlkit_digital_ink_recognition
-      sha256: "11ea94f71062ad2a784aeda7716b16a0e641878b0ddfaa930be23bcff90a6bd7"
+      sha256: "289e10da258f37c72a093a89d12b436f7df33cedf3cf5e144774503143178557"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.12.1"
   google_mlkit_entity_extraction:
     dependency: transitive
     description:
       name: google_mlkit_entity_extraction
-      sha256: "36e1f5b053c56a4d2919931d75bd73dc37e4c8b68f8e8ebeb2aa99b1bdba4de2"
+      sha256: "5670af254849e7f012f5b5c27e1253e4cb5a98a61a6d974cbc684b8667bcfe48"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0"
+    version: "0.13.1"
   google_mlkit_face_detection:
     dependency: transitive
     description:
       name: google_mlkit_face_detection
-      sha256: "65988405c884fd84a4ccc8bded7b5e3e4c33362f6f4eaaa94818bdaaba7bab7d"
+      sha256: "0aeab4f39204f7a235ed4cccedfe7e61401b43f4ef139a868c01fa29fdc225ab"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.11.1"
   google_mlkit_face_mesh_detection:
     dependency: transitive
     description:
       name: google_mlkit_face_mesh_detection
-      sha256: aa2659c03f46cf69510a998e0bd14f23b9d3c7b0c9b1fe1050656ad80d6e24bd
+      sha256: a5a1c671ef58b4e4adb891e86f1040658dbaae2087523c7d6650f2124ab4f7c2
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.1"
   google_mlkit_image_labeling:
     dependency: transitive
     description:
       name: google_mlkit_image_labeling
-      sha256: "9251c91c9281378a4716bb96dc0d3c9f54c0f809577aaba47ef24c52941dc859"
+      sha256: ec0911d514e86c8d287772fd279e7a21abb078b6163957b8f9d7b1c204866f16
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.12.1"
   google_mlkit_language_id:
     dependency: transitive
     description:
       name: google_mlkit_language_id
-      sha256: "80446a42cf5f9daf39f28489b2b38ce883aa9e3daadd73e1fe1591022507248a"
+      sha256: "75dc3b0857cd3537b3156e108baf84cefff1113e3895ffd31e876962342bf520"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.11.1"
   google_mlkit_object_detection:
     dependency: transitive
     description:
       name: google_mlkit_object_detection
-      sha256: "56f196c03a1a7b0986efac0e48ab4b82a35645de3f1f2eebc08e308ad93db469"
+      sha256: c516ed16c011a47c3abc8f087c6183fa1980b032278a4a1b45872e98d6f4180e
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0"
+    version: "0.13.1"
   google_mlkit_pose_detection:
     dependency: transitive
     description:
       name: google_mlkit_pose_detection
-      sha256: "05c4a6eaab12e575a55c83b357d76c1f694be5caf1dc8d5229a18327712f6685"
+      sha256: "24d92165cbb57c44d5c1e83f07cee3299cb62603c5d28f61a96c808a76a46763"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.12.1"
   google_mlkit_selfie_segmentation:
     dependency: transitive
     description:
       name: google_mlkit_selfie_segmentation
-      sha256: f2ff57b9d5ea0029a31ec14d038ff64d35c19b15de3b01bd517513f8c23cb779
+      sha256: c512c67d0c7aa29d5325cfeb8df9f5996976bfa8209a8809cdb5e7a18c476633
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.0"
+    version: "0.8.1"
   google_mlkit_smart_reply:
     dependency: transitive
     description:
       name: google_mlkit_smart_reply
-      sha256: "5a54de1b38e65a476c05605440691043befd3444570457d85f744c71154ef038"
+      sha256: fd4c6af2965e490b6186c4e608691069d25b21c64ba5beaf5542bf93751a541e
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.11.1"
   google_mlkit_text_recognition:
     dependency: transitive
     description:
       name: google_mlkit_text_recognition
-      sha256: e7609cec8de3022680a36ead8a8bafa9fd2360ea018a728feaad12dcb0e3c177
+      sha256: "179349417066fa2c275d7a6ed6cbceeb7fa265d73aacdb2d732f1a2991face0a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0"
+    version: "0.13.1"
   google_mlkit_translation:
     dependency: transitive
     description:
       name: google_mlkit_translation
-      sha256: "826cfe74fbee8f455d987949782e1873f50d79c1f2a971848e3f8dde851290d4"
+      sha256: f35f270afba775bd7c9864cf167fa60113144e900eab74ec7a7cc5eaead72520
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.11.1"
   http:
     dependency: transitive
     description:
       name: http
-      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      sha256: fe7ab022b76f3034adc518fb6ea04a82387620e19977665ea18d30a1cf43442f
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.3.0"
   http_parser:
     dependency: transitive
     description:
       name: http_parser
-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
+      sha256: "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.2"
   image_cropper:
     dependency: "direct main"
     description:
@@ -334,10 +334,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "82652a75e3dd667a91187769a6a2cc81bd8c111bbead698d8e938d2b63e5e89a"
+      sha256: "8bd392ba8b0c8957a157ae0dc9fcf48c58e6c20908d5880aea1d79734df090e9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12+21"
+    version: "0.8.12+22"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -358,10 +358,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_linux
-      sha256: "4ed1d9bb36f7cd60aa6e6cd479779cc56a4cb4e4de8f49d487b1aaad831300fa"
+      sha256: "34a65f6740df08bbbeb0a1abd8e6d32107941fd4868f67a507b25601651022c9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1+1"
+    version: "0.2.1+2"
   image_picker_macos:
     dependency: transitive
     description:
@@ -430,18 +430,18 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
+      sha256: "41a20518f0cb1256669420fdba0cd90d21561e560ac240f26ef8322e45bb7ed6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "2.0.0"
   path:
     dependency: transitive
     description:
       name: path
-      sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"
+      sha256: "75cca69d1490965be98c73ceaea117e8a04dd21217b37b292c9ddbec0d955bc5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.0"
+    version: "1.9.1"
   path_provider:
     dependency: transitive
     description:
@@ -454,10 +454,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "4adf4fd5423ec60a29506c76581bc05854c55e3a0b72d35bb28d661c9686edf2"
+      sha256: "0ca7359dad67fd7063cb2892ab0c0737b2daafd807cf1acecd62374c8fae6c12"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.15"
+    version: "2.2.16"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -523,10 +523,10 @@ packages:
     dependency: transitive
     description:
       name: source_span
-      sha256: "53e943d4206a5e30df338fd4c6e7a077e02254531b138a15aec3bd143c1a8b3c"
+      sha256: "254ee5351d6cb365c859e20ee823c3bb479bf4a293c22d17a9f1bf144ce86f7c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.0"
+    version: "1.10.1"
   stack_trace:
     dependency: transitive
     description:
@@ -547,26 +547,26 @@ packages:
     dependency: transitive
     description:
       name: stream_transform
-      sha256: "14a00e794c7c11aa145a170587321aedce29769c08d7f58b1d141da75e3b1c6f"
+      sha256: ad47125e588cfd37a9a7f86c7d6356dde8dfe89d071d293f80ca9e9273a33871
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   string_scanner:
     dependency: transitive
     description:
       name: string_scanner
-      sha256: "688af5ed3402a4bde5b3a6c15fd768dbf2621a614950b17f04626c431ab3c4c3"
+      sha256: "921cd31725b72fe181906c6a94d987c78e3b98c2e205b397ea399d4054872b43"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.1"
   term_glyph:
     dependency: transitive
     description:
       name: term_glyph
-      sha256: a29248a84fbb7c79282b40b8c72a1209db169a2e0542bce341da992fe1bc7e84
+      sha256: "7f554798625ea768a7518313e58f83891c7f5024f88e46e7182a4558850a4b8e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   test_api:
     dependency: transitive
     description:
@@ -579,10 +579,10 @@ packages:
     dependency: transitive
     description:
       name: typed_data
-      sha256: facc8d6582f16042dd49f2463ff1bd6e2c9ef9f3d5da3d9b087e244a7b564b3c
+      sha256: f9049c039ebfeb4cf7a7104a675823cd72dba8297f264b6637062516699fa006
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.2"
+    version: "1.4.0"
   vector_math:
     dependency: transitive
     description:
@@ -595,10 +595,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
+      sha256: "868d88a33d8a87b18ffc05f9f030ba328ffefba92d6c127917a2ba740f9cfe4a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -608,5 +608,5 @@ packages:
     source: hosted
     version: "1.1.0"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  dart: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
